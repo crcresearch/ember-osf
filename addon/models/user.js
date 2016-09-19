@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
 import OsfModel from './osf-model';
@@ -23,11 +24,17 @@ export default OsfModel.extend({
     familyName: DS.attr('string'),
 
     dateRegistered: DS.attr('date'),
+    // email
+    username: DS.attr('string'),
 
     nodes: DS.hasMany('nodes'),
     registrations: DS.hasMany('registrations'),
 
     affiliatedInstitutions: DS.hasMany('institutions', {
         inverse: 'users'
-    })
+    }),
+
+    // Calculated fields
+    profileURL: Ember.computed.alias('links.html'),
+    profileImage: Ember.computed.alias('links.profile_image')
 });
