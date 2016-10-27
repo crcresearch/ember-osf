@@ -21,15 +21,15 @@ import layout from './template';
 export default Ember.Component.extend({
     layout,
     _commentText: null,
-
+    // user: user,
     actions: {
         /**
          * Call a passed-in closure action to handle submitting a comment. Reset the form if save succeeds.
          * @method addComment
          * @param {String} text The text of the comment to create
          */
-        addComment(text) {
-            let res = this.attrs.addComment(text);
+        addComment(text, user) {
+            let res = this.attrs.addComment(text, user);
             res.then(() => this.set('_commentText', ''));
         }
     }

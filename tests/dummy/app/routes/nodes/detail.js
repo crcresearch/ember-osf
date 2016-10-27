@@ -9,6 +9,7 @@ export default Ember.Route.extend({
         controller.set('editedCategory', model.get('category'));
         controller.set('editedDescription', model.get('description'));
         controller.set('editedIsPublic', model.get('public'));
+        controller.set('user', model.get('user'));
         this._super(...arguments);
     }
 });
