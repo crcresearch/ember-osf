@@ -28,5 +28,12 @@ import layout from './template';
  */
 export default Ember.Component.extend({
     layout,
-    comment: null
+    comment: null,
+    actions: {
+        addReply(originalComment, text, user) {
+            let res = this.attrs.addReply(originalComment, text, user);
+            this.set('isReply', false);
+            res.then(() => this.set('_replyText', ''));
+        }
+    }
 });
