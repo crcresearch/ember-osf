@@ -48,8 +48,6 @@ export default Ember.Mixin.create({
                 targetType: Ember.Inflector.inflector.pluralize(model.constructor.modelName)
             });
             commentsRel.pushObject(comment);
-            // console.log(comment.toJSON());
-            // console.log(comment.user);
             return model.save().then(() => comment);
         },
         /**
@@ -89,6 +87,25 @@ export default Ember.Mixin.create({
         reportComment() {
             // TODO: Implement
             console.log('Consider this comment reported');
+        },
+        addReply(originalComment, text, user) {
+          //Create Reply comment
+          // Assumes that the page's model hook is the target for the comment
+          let model = this.get('model');
+          var commentsRel = model.get('comments');
+          var replyComment = this.store.createRecord('comment', {
+              content: text,
+              canEdit: true,
+              page: 'node',
+              user: user,
+              targetID: model.get('guid') || model.id,
+              targetType: Ember.Inflector.inflector.pluralize(model.constructor.modelName)
+          })
+          commentsRel.pushObject(replyComment);
+
+          originalComment.get('replies').pushObject(replyComment);
+
+          return model.save().then(() => replyComment);
         }
     }
 });
