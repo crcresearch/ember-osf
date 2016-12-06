@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-
 import OsfModel from './osf-model';
 
 import FileItemMixin from 'ember-osf/mixins/file-item';
@@ -39,6 +38,7 @@ export default OsfModel.extend(FileItemMixin, {
     dateCreated: DS.attr('date'),
     dateModified: DS.attr('date'),
 
+    nodeLicense: DS.attr(),
     tags: DS.attr(),
 
     templateFrom: DS.attr('string'),
@@ -49,6 +49,9 @@ export default OsfModel.extend(FileItemMixin, {
     children: DS.hasMany('nodes', {
         inverse: 'parent'
     }),
+    preprints: DS.hasMany('preprints', {
+        inverse: 'node'
+    }),
     affiliatedInstitutions: DS.hasMany('institutions', {
         inverse: 'nodes'
     }),
@@ -57,6 +60,10 @@ export default OsfModel.extend(FileItemMixin, {
         allowBulkUpdate: true,
         allowBulkRemove: true,
         inverse: 'node'
+    }),
+
+    license: DS.belongsTo('license', {
+        inverse: null
     }),
 
     files: DS.hasMany('file-provider'),
@@ -165,6 +172,45 @@ export default OsfModel.extend(FileItemMixin, {
         });
 
         return contrib.save();
+    },
+
+    addContributors(contributors, sendEmail) {
+        let payload = contributors.map(contrib => {
+            let c = this.store.createRecord('contributor', {
+                permission: contrib.permission,
+                bibliographic: contrib.bibliographic,
+                nodeId: this.get('id'),
+                userId: contrib.userId,
+                id: this.get('id') + '-' + contrib.userId,
+                unregisteredContributor: null
+            });
+            return c.serialize({
+                includeId: true,
+                includeUser: true
+            }).data;
+        });
+
+        let emailQuery = '';
+        if (!sendEmail) {
+            emailQuery = '?send_email=false';
+        } else if (sendEmail === 'preprint') {
+            emailQuery = '?send_email=preprint';
+        }
+
+        // TODO Get this working properly - should not be an ajax request in the future.
+        return this.store.adapterFor('contributor').ajax(this.get('links.relationships.contributors.links.related.href') + emailQuery, 'POST', {
+            data: {
+                data: payload
+            },
+            isBulk: true
+        }).then(resp => {
+            this.store.pushPayload(resp);
+            var createdContribs = Ember.A();
+            resp.data.map((contrib) => {
+                createdContribs.push(this.store.peekRecord('contributor', contrib.id));
+            });
+            return createdContribs;
+        });
     },
 
     removeContributor(contributor) {
