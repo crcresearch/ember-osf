@@ -35,19 +35,21 @@ export default Ember.Mixin.create({
          * @param {String} text The text of the new comment
          * @return {Promise} The newly created comment
          */
-        addComment(text, user) {
+        addComment(text, user, parent) {
             // Assumes that the page's model hook is the target for the comment
             let model = this.get('model');
             var commentsRel = model.get('comments');
-            var comment = this.store.createRecord('comment', {
-                content: text,
-                canEdit: true,
-                page: 'node',
-                user: user,
-                targetID: model.get('guid') || model.id,
-                targetType: Ember.Inflector.inflector.pluralize(model.constructor.modelName)
-            });
+
+            var body = {};
+            body.content = text;
+            body.user = user;
+            body.canEdit = true;
+            body.targetID = (!!parent) ? parent.id : model.get('guid') || model.id;
+            body.targetType = (!!parent) ? Ember.Inflector.inflector.pluralize(parent.constructor.modelName) : Ember.Inflector.inflector.pluralize(model.constructor.modelName);
+
+            var comment = this.get('store').createRecord('comment', body);
             commentsRel.pushObject(comment);
+
             return model.save().then(() => comment);
         },
         /**
@@ -88,24 +90,24 @@ export default Ember.Mixin.create({
             // TODO: Implement
             console.log('Consider this comment reported');
         },
-        addReply(originalComment, text, user) {
-          //Create Reply comment
-          // Assumes that the page's model hook is the target for the comment
-          let model = this.get('model');
-          var commentsRel = model.get('comments');
-          var replyComment = this.store.createRecord('comment', {
-              content: text,
-              canEdit: true,
-              page: 'node',
-              user: user,
-              targetID: model.get('guid') || model.id,
-              targetType: Ember.Inflector.inflector.pluralize(model.constructor.modelName)
-          })
-          commentsRel.pushObject(replyComment);
-
-          originalComment.get('replies').pushObject(replyComment);
-
-          return model.save().then(() => replyComment);
-        }
+        // addReply(originalComment, text, user) {
+        //   //Create Reply comment
+        //   // Assumes that the page's model hook is the target for the comment
+        //   let model = this.get('model');
+        //   var commentsRel = model.get('comments');
+        //   var replyComment = this.store.createRecord('comment', {
+        //       content: text,
+        //       canEdit: true,
+        //     //   page: 'node',
+        //       user: user,
+        //       targetID: model.get('guid') || model.id,
+        //       targetType: Ember.Inflector.inflector.pluralize(model.constructor.modelName)
+        //   })
+        //   commentsRel.pushObject(replyComment);
+        //
+        //   originalComment.get('replies').pushObject(replyComment);
+        //
+        //   return model.save().then(() => replyComment);
+        // }
     }
 });
