@@ -85,7 +85,8 @@ module.exports = {
             ENV.OSF.helpUrl = 'http://help.osf.io';
         }
         if(BACKEND === 'craft') {
-            ENV.OSF.url = 'https://craftproject.org/';
+             ENV.OSF.osfUrl = "https://osf.craftproject.org/";
+             ENV.OSF.url = 'https://craftproject.org/';
              ENV.OSF.apiUrl = 'https://osf.craftproject.org:5001';
              ENV.OSF.cookieLoginUrl = 'https://cas.craftproject.org/login';
              ENV.OSF.oauthUrl = 'https://cas.craftproject.org/oauth2/authorize';
