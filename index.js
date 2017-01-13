@@ -95,10 +95,7 @@ module.exports = {
              ENV.OSF.helpUrl = 'http://help.osf.io';
         }
         ENV['ember-simple-auth'] = {
-            // authorizer: 'authorizer:osf-token'
-            authorizer: 'authorizer:osf-cookie',
-            authenticator: 'authenticator:osf-cookie',
-            // authenticationRoute: 'cookielogin'
+            authorizer: 'authorizer:osf-token'
         };
     },
     afterInstall: function(options) {
