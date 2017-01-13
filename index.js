@@ -75,7 +75,7 @@ module.exports = {
             ENV.OSF.helpUrl = 'http://help.osf.io';
         }
         if (BACKEND === 'prod') {
-            console.log(`WARNING: you\'ve specified production as a backend. Please do not use production for testing or development purposes`);
+            // console.log(`WARNING: you\'ve specified production as a backend. Please do not use production for testing or development purposes`);
             ENV.OSF.url = 'https://osf.io/';
             ENV.OSF.apiUrl = 'https://api.osf.io';
             ENV.OSF.cookieLoginUrl = 'https://accounts.osf.io/login';
@@ -83,7 +83,15 @@ module.exports = {
             ENV.OSF.renderUrl = 'https://mfr.osf.io/render';
             ENV.OSF.waterbutlerUrl = 'http://files.osf.io/';
             ENV.OSF.helpUrl = 'http://help.osf.io';
-
+        }
+        if(BACKEND === 'craft') {
+            ENV.OSF.url = 'https://craftproject.org/';
+             ENV.OSF.apiUrl = 'https://osf.craftproject.org:5001';
+             ENV.OSF.cookieLoginUrl = 'https://cas.craftproject.org/login';
+             ENV.OSF.oauthUrl = 'https://cas.craftproject.org/oauth2/authorize';
+             ENV.OSF.renderUrl = 'https://osf.craftproject.org:7512/render';
+             ENV.OSF.waterbutlerUrl = 'https://osf.craftproject.org:7123';
+             ENV.OSF.helpUrl = 'http://help.osf.io';
         }
         ENV['ember-simple-auth'] = {
             authorizer: 'authorizer:osf-token'
