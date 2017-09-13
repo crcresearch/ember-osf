@@ -105,7 +105,7 @@ export default Ember.Mixin.create({
          * @param {Boolean} sendEmail Whether user will receive an email when added. "default: true"
          * @return {Promise} Returns a promise that resolves to the newly created contributor object.
          */
-        addContributor(userId, permission, isBibliographic, sendEmail) { // jshint ignore:line
+        addContributor() {
             return this.get('_node').addContributor(...arguments);
         },
         /**
@@ -116,7 +116,7 @@ export default Ember.Mixin.create({
          * @param {Boolean} sendEmail Whether user will receive an email when added. "default: true"
          * @return {Promise} Returns a promise that resolves to an array of added contributors
          */
-        addContributors(contributors, sendEmail) { // jshint ignore:line
+        addContributors() {
             return this.get('_node').addContributors(...arguments);
         },
         /**
@@ -141,7 +141,7 @@ export default Ember.Mixin.create({
          * @return {Promise} Returns a promise that resolves to the updated node
          * with edited contributor relationships.
          */
-        updateContributors(contributors, permissionsChanges, bibliographicChanges) {  // jshint ignore:line
+        updateContributors() {
             return this.get('_node').updateContributors(...arguments);
         },
 
@@ -155,7 +155,7 @@ export default Ember.Mixin.create({
          * @return {Promise} Returns a promise that resolves to the updated node
          * with edited contributor relationships.
          */
-        updateContributor(contributor, permissions, bibliographic) { // jshint ignore:line
+        updateContributor() {
             return this.get('_node').updateContributor(...arguments);
         },
         /**
@@ -197,30 +197,32 @@ export default Ember.Mixin.create({
             return this.get('_node').addChild(title, description, category);
         },
         /**
-         * Add a node link (pointer) to another node
+         * Adds a relationship to another node, called a linkedNode.
          *
          * @method addNodeLink
-         * @param {String} targetNodeId ID of the node for which you wish to create a pointer
-         * @return {Promise} Returns a promise that resolves to model for the newly created NodeLink
+         * @param {String} targetNodeId ID of the node for which you wish to create a link
+         * @return {Promise} Returns a promise that resolves to the newly updated node
          */
         addNodeLink(targetNodeId) {
             var node = this.get('_node');
-            var nodeLink = this.store.createRecord('node-link', {
-                target: targetNodeId
+            return this.store.findRecord('node', targetNodeId).then(linkedNode => {
+                node.get('linkedNodes').pushObject(linkedNode);
+                return node.save();
             });
-            node.get('nodeLinks').pushObject(nodeLink);
-            return node.save().then(() => nodeLink);
+
         },
         /**
-         * Remove a node link (pointer) to another node
+         * Removes the linkedNode relationship to another node. Does not remove the linked node itself.
          *
          * @method removeNodeLink
-         * @param {Object} nodeLink nodeLink record to be destroyed.
-         * @return {Promise} Returns a promise that resolves after the node link has been removed.  This does not delete
-         * the target node itself.
+         * @param {Object} linkedNode linkedNode relationship to be destroyed.
+         * @return {Promise} Returns a promise that resolves to the newly updated node
          */
-        removeNodeLink(nodeLink) {
-            return nodeLink.destroyRecord();
+        removeNodeLink(linkedNode) {
+            var node = this.get('_node');
+            node.get('linkedNodes').removeObject(linkedNode);
+            return node.save();
         }
+
     }
 });

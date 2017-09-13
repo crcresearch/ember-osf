@@ -40,6 +40,9 @@ export default DS.JSONAPISerializer.extend({
             }
             //TODO Pagination probably breaks here
             let data = resourceHash.embeds[embedded].data || resourceHash.embeds[embedded];
+            if (!('errors' in data)) {
+                this.store.pushPayload({ data });
+            }
             if (Array.isArray(data)) {
                 included = included.concat(data);
             } else {
@@ -101,7 +104,7 @@ export default DS.JSONAPISerializer.extend({
         return serialized;
     },
 
-    serializeAttribute(snapshot, json, key, attribute) { // jshint ignore:line
+    serializeAttribute(snapshot, json, key) {
         // In certain cases, a field may be omitted from the server payload, but have a value (undefined)
         // when serialized from the model. (eg node.template_from)
         // Omit fields with a value of undefined before sending to the server. (but still allow null to be sent)
@@ -111,12 +114,12 @@ export default DS.JSONAPISerializer.extend({
         }
     },
 
-    normalizeArrayResponse(store, primaryModelClass, payload, id, requestType) { // jshint ignore:line
-        // Ember data does not yet support pagination. For any request that returns more than one result, extract
-        //  links.meta from the payload links section, and add to the model metadata manually.
+    normalizeArrayResponse(store, primaryModelClass, payload) {
+        // Ember data does not yet support pagination. For any request that returns more than one result, add pagination data
+        // under meta, and then calculate total pages to be loaded.
         let documentHash = this._super(...arguments);
         documentHash.meta = documentHash.meta || {};
-        documentHash.meta.pagination = Ember.get(payload || {}, 'links.meta');
+        documentHash.meta.pagination = Ember.$.extend(true, {}, Ember.get(payload || {}, 'meta'));
         documentHash.meta.total = Math.ceil(documentHash.meta.pagination.total / documentHash.meta.pagination.per_page);
         return documentHash;
     }

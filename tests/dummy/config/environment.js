@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-env node */
 
 module.exports = function(environment) {
 
@@ -14,9 +14,33 @@ module.exports = function(environment) {
     }
 
     var ENV = {
+        metricsAdapters: [
+            {
+                name: 'GoogleAnalytics',
+                environments: ['all'],
+                config: {
+                    id: process.env.GOOGLE_ANALYTICS_ID
+                }
+            },
+            {
+                name: 'Keen',
+                environments: ['all'],
+                config: {
+                    private: {
+                        projectId: process.env.KEEN_PRIVATE_PROJECT_ID,
+                        writeKey: process.env.KEEN_PRIVATE_WRITE_KEY
+                    },
+                    public: {
+                        projectId: process.env.KEEN_PUBLIC_PROJECT_ID,
+                        writeKey: process.env.KEEN_PUBLIC_WRITE_KEY
+                    }
+                }
+            }
+        ],
         modulePrefix: 'dummy',
+        appName: 'Dummy App',
         environment: environment,
-        baseURL: '/',
+        rootURL: '/',
         locationType: 'auto',
 
         EmberENV: {
@@ -51,8 +75,21 @@ module.exports = function(environment) {
 
     if (environment === 'test') {
         // Testem prefers this...
-        ENV.baseURL = '/';
+        ENV.rootURL = '/';
         ENV.locationType = 'none';
+
+        ENV.OSF = {
+            url: '/nowhere',
+            apiUrl: 'http://localhost:8000',
+            renderUrl: '/nowhere',
+            waterbutlerUrl: '/nowhere',
+            helpUrl: '/nowhere',
+            cookieLoginUrl: '/nowhere',
+            oauthUrl: '/nowhere',
+            shareBaseUrl: '/nowhere',
+            shareApiUrl: '/nowhere',
+            shareSearchUrl: '/nowhere'
+        };
 
         // keep test console output quieter
         ENV.APP.LOG_ACTIVE_GENERATION = false;

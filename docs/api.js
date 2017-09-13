@@ -1,20 +1,22 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "Analytics",
         "CasAuthenticatedRouteMixin",
+        "Citation",
         "Collection",
         "Comment",
         "CommentReport",
         "CommentableMixin",
         "Contributor",
         "DraftRegistration",
-        "FetchAllRouteMixin",
         "File",
         "FileCacheBypassMixin",
         "FileItemMixin",
         "FileProvider",
         "FileVersion",
         "GenericDataADapter",
+        "HostAppNameMixin",
         "InfinityCustomMixin",
         "Institution",
         "Log",
@@ -45,13 +47,19 @@ YUI.add("yuidoc-meta", function(Y) {
         "User",
         "ajax-helpers",
         "auth",
+        "author-link",
+        "buildSecondaryNavLinks",
+        "citation-widget",
         "comment-detail",
         "comment-form",
         "comment-pane",
         "current-user",
+        "discover-page",
         "dropzone-widget",
+        "elastic-query",
         "elem-id",
         "eosf-project-nav",
+        "faceted-search",
         "file-browser",
         "file-browser-icon",
         "file-chooser component",
@@ -59,90 +67,118 @@ YUI.add("yuidoc-meta", function(Y) {
         "file-renderer",
         "file-version",
         "file-widget",
+        "filterReplace",
+        "fix-special-char",
+        "fix-special-char-helper",
+        "fixstring",
+        "getDisplayName",
+        "ifFilter",
+        "license-picker",
+        "navbar-auth-dropdown",
+        "new-navbar-auth-dropdown",
         "oauth-popup",
         "osf-copyright",
         "osf-footer",
         "osf-mode-footer",
         "osf-navbar",
         "osf-paginator",
+        "osf-services",
         "pagination-control",
+        "permissions",
+        "providerRegex",
         "search-dropdown",
+        "search-facet-daterange",
+        "search-facet-language",
+        "search-facet-locked",
+        "search-facet-source",
+        "search-facet-typeahead",
+        "search-facet-worktype",
+        "search-facet-worktype-button",
+        "search-facet-worktype-hierarchy",
+        "search-help-modal",
+        "search-result",
+        "service-links",
         "sign-up",
-        "tags-widget"
+        "sortOptionDisplay",
+        "tags-widget",
+        "theme",
+        "total-share-results"
     ],
     "modules": [
         "adapters",
         "authenticators",
         "authorizers",
         "components",
-        "ember",
+        "const",
         "ember-osf",
-        "ember-preprints",
         "helpers",
         "mixins",
         "models",
         "serializers",
         "services",
+        "transforms",
         "utils"
     ],
     "allModules": [
         {
             "displayName": "adapters",
             "name": "adapters",
-            "description": "Base adapter class for all OSF APIv2 endpoints"
+            "description": "Adapters that control how the addon communicates with the OSF"
         },
         {
             "displayName": "authenticators",
             "name": "authenticators",
-            "description": "Ember-simple-auth compatible authenticator based on session cookie.\n\nIntended to be used with the authorizer of the same name."
+            "description": "Support various forms of authentication to the OSF, such as `token` and `cookie`"
         },
         {
             "displayName": "authorizers",
             "name": "authorizers",
-            "description": "Ember-simple-auth compatible authorizer based on session cookie.\n\nIntended to be used with the authenticator of the same name."
+            "description": "Support sending authorized requests to the OSF via various means"
         },
         {
             "displayName": "components",
             "name": "components",
-            "description": "Display information about an individual comment, including controls to edit, delete, and report.\nThis component is typically used as part of the `comment-pane` component; see that component for further information.\n\nSample usage:\n```handlebars\n{{comment-detail\n  comment=comment\n  editComment=attrs.editComment\n  deleteComment=attrs.deleteComment\n  restoreComment=attrs.restoreComment\n  reportComment=attrs.reportComment}}\n```"
+            "description": "Reusable UI elements"
         },
         {
-            "displayName": "ember",
-            "name": "ember"
+            "displayName": "const",
+            "name": "const",
+            "description": "Predefined constants that are frequently referenced"
         },
         {
             "displayName": "ember-osf",
             "name": "ember-osf",
-            "description": "Helper functions for asynchronous behavior"
-        },
-        {
-            "displayName": "ember-preprints",
-            "name": "ember-preprints"
+            "description": "Reusable ember models and components for interacting with the Open Science Framework"
         },
         {
             "displayName": "helpers",
             "name": "helpers",
-            "description": "Generate a unique HTML element ID for this element. Given \"someid\" for component instance 123, returns \"ember123-someid\"\n\nUseful to ensure unique IDs, eg for when component is reused in page."
+            "description": "Handlebars template helpers"
         },
         {
             "displayName": "mixins",
             "name": "mixins",
-            "description": "Replacement for Ember-simple-auth AuthenticatedRouteMixin. Instead of redirecting to an internal route,\n  this mixin redirects to CAS login URL, and brings the user back to the last requested page afterwards\n\nFor OAuth this is done via the state parameter, and for cookies this is done via the service parameter. (TODO: Need a mixin that detects this!)"
+            "description": "Reusable logic that can be added to routes, controllers, or components"
         },
         {
             "displayName": "models",
             "name": "models",
-            "description": "Model for OSF APIv2 collections\nFor field and usage information, see:\n* https://api.osf.io/v2/docs/#!/v2/Collection_List_GET"
+            "description": "Ember-data models for interacting with the OSF APIv2"
         },
         {
             "displayName": "serializers",
             "name": "serializers",
-            "description": "Base serializer class for all OSF APIv2 endpoints. Provides custom behaviors for embeds, relationships, and pagination."
+            "description": "Ember-data serializer logic that governs how data passes to or from the server"
         },
         {
             "displayName": "services",
             "name": "services",
-            "description": "Access information about the currently logged in user"
+            "description": "Manage behaviors that require coordinating shared state or namespaced logic across the application"
+        },
+        {
+            "displayName": "transforms",
+            "name": "transforms",
+            "description": "Control how ember-data serializes and deserializes fields"
         },
         {
             "displayName": "utils",

@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import OsfModel from './osf-model';
 
 /**
- * @module ember-preprints
+ * @module ember-osf
  * @submodule models
  */
 
@@ -13,7 +13,9 @@ import OsfModel from './osf-model';
  * @class Taxonomy
  */
 export default OsfModel.extend({
-    text: DS.attr('string'),
+    text: DS.attr('fixstring'),
+    shareTitle: DS.attr('string'),
+    path: DS.attr('string'),
     // TODO: Api implements this as a list field for now. This should be a relationship field in the future, when API supports it
     child_count: DS.attr(),
     parents: DS.attr()
