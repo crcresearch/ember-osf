@@ -82,5 +82,25 @@
         "shareBaseUrl": "SHARE_BASE_URL",
         "shareApiUrl": "SHARE_API_URL",
         "shareSearchUrl": "SHARE_SEARCH_URL"
+    },
+    "craft": {
+        "osfUrl" : "https://osf.craftproject.org/",
+        "url" : "https://craftproject.org/",
+        "apiUrl" : "https://osf.craftproject.org:5001",
+        "cookieLoginUrl" : "https://cas.craftproject.org/login",
+        "oauthUrl" : "https://cas.craftproject.org/oauth2/authorize",
+        "renderUrl" : "https://osf.craftproject.org:7512/render",
+        "waterbutlerUrl" : "https://osf.craftproject.org:7123",
+        "helpUrl" : "http://help.osf.io"
+    },
+    "dev-craft": {
+        "osfUrl" : "https://osf-dev.craftproject.org/",
+        "url" : "http://localhost:4200/",
+        "apiUrl" : "https://osf-dev.craftproject.org:5001",
+        "cookieLoginUrl" : "https://cas.craftproject.org/login",
+        "oauthUrl" : "https://cas.craftproject.org/oauth2/authorize",
+        "renderUrl" : "https://osf-dev.craftproject.org:7512/render",
+        "waterbutlerUrl" : "https://osf-dev.craftproject.org:7123",
+        "helpUrl" : "http://help.osf.io"
     }
 }

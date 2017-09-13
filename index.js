@@ -52,8 +52,26 @@ module.exports = {
         if (!Object.keys(knownBackends).includes(BACKEND)) {
             console.warn('WARNING: You have specified an unknown backend environment. If you need to customize URL settings, specify BACKEND=env');
         }
-
-        if (BACKEND === 'local') {
+        
+        if(BACKEND === 'craft') {
+             ENV.OSF.osfUrl = "https://osf.craftproject.org/";
+             ENV.OSF.url = 'https://craftproject.org/';
+             ENV.OSF.apiUrl = 'https://osf.craftproject.org:5001';
+             ENV.OSF.cookieLoginUrl = 'https://cas.craftproject.org/login';
+             ENV.OSF.oauthUrl = 'https://cas.craftproject.org/oauth2/authorize';
+             ENV.OSF.renderUrl = 'https://osf.craftproject.org:7512/render';
+             ENV.OSF.waterbutlerUrl = 'https://osf.craftproject.org:7123';
+             ENV.OSF.helpUrl = 'http://help.osf.io';
+        } else if(BACKEND === 'dev-craft') {
+             ENV.OSF.osfUrl = "https://osf-dev.craftproject.org/";
+             ENV.OSF.url = 'http://localhost:4200/';
+             ENV.OSF.apiUrl = 'https://osf-dev.craftproject.org:5001';
+             ENV.OSF.cookieLoginUrl = 'https://cas.craftproject.org/login';
+             ENV.OSF.oauthUrl = 'https://cas.craftproject.org/oauth2/authorize';
+             ENV.OSF.renderUrl = 'https://osf-dev.craftproject.org:7512/render';
+             ENV.OSF.waterbutlerUrl = 'https://osf-dev.craftproject.org:7123';
+             ENV.OSF.helpUrl = 'http://help.osf.io';
+        } else if (BACKEND === 'local') {
             backendUrlConfig.accessToken = eitherConfig('PERSONAL_ACCESS_TOKEN');
             backendUrlConfig.isLocal = true;
         } else if (BACKEND === 'prod') {
