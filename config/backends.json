@@ -93,14 +93,14 @@
         "waterbutlerUrl" : "https://osf.craftproject.org:7123",
         "helpUrl" : "http://help.osf.io"
     },
-    "dev-craft": {
+    "devcraft": {
         "osfUrl" : "https://osf-dev.craftproject.org/",
-        "url" : "http://localhost:4200/",
-        "apiUrl" : "https://osf-dev.craftproject.org:5001",
+        "url" : "https://dev.craftproject.org/",
+        "apiUrl" : "https://osf-dev.craftproject.org/_rest",
         "cookieLoginUrl" : "https://cas.craftproject.org/login",
         "oauthUrl" : "https://cas.craftproject.org/oauth2/authorize",
-        "renderUrl" : "https://osf-dev.craftproject.org:7512/render",
-        "waterbutlerUrl" : "https://osf-dev.craftproject.org:7123",
+        "renderUrl" : "https://osf-dev.craftproject.org/render",
+        "waterbutlerUrl" : "https://osf-dev.craftproject.org/waterbutler",
         "helpUrl" : "http://help.osf.io"
     }
 }

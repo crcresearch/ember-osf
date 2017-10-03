@@ -24,7 +24,8 @@ module.exports = {
         return path.join(__dirname, 'blueprints');
     },
     config: function(environment, ENV) {
-        let BACKEND = process.env.BACKEND || 'local';
+        //let BACKEND = process.env.BACKEND || 'local';
+        let BACKEND = 'devcraft'; //process.env.BACKEND || 'local';
         // Settings required to configure the developer application, primarily for OAuth2
         let configFileSettings = {};
         // Backwards compatibility: old config/*.yml files were nested, with keys like "stage", "test", etc.
@@ -62,9 +63,9 @@ module.exports = {
              ENV.OSF.renderUrl = 'https://osf.craftproject.org:7512/render';
              ENV.OSF.waterbutlerUrl = 'https://osf.craftproject.org:7123';
              ENV.OSF.helpUrl = 'http://help.osf.io';
-        } else if(BACKEND === 'dev-craft') {
+        } else if(BACKEND === 'devcraft') {
              ENV.OSF.osfUrl = "https://osf-dev.craftproject.org/";
-             ENV.OSF.url = 'http://localhost:4200/';
+             ENV.OSF.url = 'https://dev.craftproject.org/';
              ENV.OSF.apiUrl = 'https://osf-dev.craftproject.org:5001';
              ENV.OSF.cookieLoginUrl = 'https://cas.craftproject.org/login';
              ENV.OSF.oauthUrl = 'https://cas.craftproject.org/oauth2/authorize';
