@@ -25,7 +25,7 @@ module.exports = {
     },
     config: function(environment, ENV) {
         //let BACKEND = process.env.BACKEND || 'local';
-        let BACKEND = 'devcraft'; //process.env.BACKEND || 'local';
+        let BACKEND = process.env.BACKEND || 'local';
         // Settings required to configure the developer application, primarily for OAuth2
         let configFileSettings = {};
         // Backwards compatibility: old config/*.yml files were nested, with keys like "stage", "test", etc.

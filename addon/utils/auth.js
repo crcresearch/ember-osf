@@ -41,7 +41,6 @@ function getOAuthUrl(nextUri) {
 function getCookieAuthUrl(nextUri) {
     nextUri = nextUri || config.OSF.redirectUri;
     const loginUri = `${config.OSF.url}login/?next=${encodeURIComponent(nextUri)}`;
-    return `${config.OSF.cookieLoginUrl}?service=${config.OSF.osfUrl}`;
     return `${config.OSF.cookieLoginUrl}?service=${encodeURIComponent(loginUri)}`;
 }
 

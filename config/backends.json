@@ -102,5 +102,15 @@
         "renderUrl" : "https://osf-dev.craftproject.org/render",
         "waterbutlerUrl" : "https://osf-dev.craftproject.org/waterbutler",
         "helpUrl" : "http://help.osf.io"
+    },
+    "dev-craft": {
+        "osfUrl" : "https://osf-dev.craftproject.org/",
+        "url" : "localhost:4200/",
+        "apiUrl" : "https://osf-dev.craftproject.org/_rest",
+        "cookieLoginUrl" : "https://cas.craftproject.org/login",
+        "oauthUrl" : "https://cas.craftproject.org/oauth2/authorize",
+        "renderUrl" : "https://osf-dev.craftproject.org/render",
+        "waterbutlerUrl" : "https://osf-dev.craftproject.org/waterbutler",
+        "helpUrl" : "http://help.osf.io"
     }
 }
