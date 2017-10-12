@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import _ from 'lodash';
 
 /**
  * @module ember-osf
@@ -14,7 +15,7 @@ import DS from 'ember-data';
 export default DS.JSONAPISerializer.extend({
     attrs: {
         links: {
-            serialize: false
+            serialize: true
         },
         embeds: {
             serialize: false
@@ -119,8 +120,12 @@ export default DS.JSONAPISerializer.extend({
         // under meta, and then calculate total pages to be loaded.
         let documentHash = this._super(...arguments);
         documentHash.meta = documentHash.meta || {};
-        documentHash.meta.pagination = Ember.$.extend(true, {}, Ember.get(payload || {}, 'meta'));
-        documentHash.meta.total = Math.ceil(documentHash.meta.pagination.total / documentHash.meta.pagination.per_page);
+        if(_.has(payload, 'links.meta')) {
+            documentHash.meta.pagination = Ember.$.extend(true, {}, Ember.get(payload || {}, 'links.meta'));
+        } else {
+            documentHash.meta.pagination = Ember.$.extend(true, {}, Ember.get(payload || {}, 'meta'));
+        }
+        documentHash.meta.total = Math.ceil(documentHash.meta.pagination.total / documentHash.meta.pagination.per_page); 
         return documentHash;
     }
 });
